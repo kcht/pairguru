@@ -1,8 +1,8 @@
 class TitleBracketsValidator
-  attr_accessor :title
+  attr_accessor :record
 
-  def initialize(title)
-    @title = title
+  def initialize(record)
+    @record = record
   end
 
   BRACKETS_PAIRS = {'(' => ')', '{' => '}', '[' => ']'}
