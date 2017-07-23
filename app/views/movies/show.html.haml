@@ -4,3 +4,23 @@
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(movie), class: 'btn btn-sm btn-default'
   %p= link_to 'Leave a comment', new_comment_path(movie_id: movie.id), class: 'btn btn-sm btn-default'
+%h2= 'Comments' #to do: add "no comments"
+%table.table.table-striped
+  %tbody
+    %th
+      %td= 'Author'
+      %td= 'Comment'
+      %td
+    - movie.comments.each_with_index do |comment, i|
+      %tr
+        %td= i + 1
+        %td
+          %p= comment.user.email
+        %td
+          %p= comment.title
+          %p= comment.content
+        %td
+          - if current_user.id == comment.user.id
+            = link_to 'Delete my comment', comment_path(comment), method: :delete
+
+
