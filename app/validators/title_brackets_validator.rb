@@ -3,13 +3,20 @@ class TitleBracketsValidator
 
   def initialize(title)
     @title = title
-    @brackets_pairs = {'(' => ')', '{' => '}', '[' => ']'}
   end
 
+  BRACKETS_PAIRS = {'(' => ')', '{' => '}', '[' => ']'}
+
+  def contains_empty_brackets?(title)
+    remove_whitespaces = title.gsub!(/\s/,'')
+    !!remove_whitespaces.match(/\{\}|\(\)|\[\]/)
+  end
 
   def validate(record)
     title = record.title
-    if title.gsub(/\s/, '').match(/\{\}|\(\)|\[\]/)
+    return if title.empty?
+
+    if contains_empty_brackets?(title)
       record.errors.add(:base, "Record contains empty brackets")
     end
 
@@ -29,14 +36,14 @@ class TitleBracketsValidator
   private
 
   def opening_bracket?(char)
-    @brackets_pairs.keys.include?(char)
+    BRACKETS_PAIRS.keys.include?(char)
   end
 
   def closing_bracket?(char)
-    @brackets_pairs.values.include?(char)
+    BRACKETS_PAIRS.values.include?(char)
   end
 
   def matching_brackets?(opening:, closing:)
-    @brackets_pairs[opening] == closing
+    BRACKETS_PAIRS[opening] == closing
   end
 end
