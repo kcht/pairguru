@@ -5,6 +5,10 @@ class CommentsController < ApplicationController
 
   def create
     @movie = Movie.find(params[:comment][:movie_id])
+
+    @comment = Comment.find_or_initialize_by(movie_id: @movie.id, user_id: current_user.id)
+    @comment.update_attributes(title: comment_params[:title], content: comment_params[:content])
+
     redirect_to @movie
   end
 
