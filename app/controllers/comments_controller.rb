@@ -17,9 +17,14 @@ class CommentsController < ApplicationController
     redirect_back fallback_location: root_path
   end
 
+  def top_commenters
+    @top_commenters = User.top_commenters_from_last_week
+  end
+
   private
 
   def comment_params
     params.require(:comment).permit(:title, :content)
   end
 end
+

@@ -16,4 +16,6 @@ Rails.application.routes.draw do
     end
   end
   resources :comments
+
+  get '/top_commenters', to: 'comments#top_commenters', as: 'top_commenters'
 end
