@@ -8,7 +8,7 @@ RSpec.describe CommentsController, type: :controller do
           content: comment[:content],
           movie_id: comment[:movie_id],
           user_id: comment[:user_id]
-      } }
+      }, movie_id: movie.id}
     end
 
     before do

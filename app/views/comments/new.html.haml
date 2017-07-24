@@ -6,16 +6,4 @@
         %h3.panel-title
           Add a new comment
       .panel-body
-        = form_for(:comment, url: comments_path) do |f|
-          .form-group
-            = f.label :title
-            %br/
-            = f.text_field :title, autofocus: true, class: 'form-control'
-            %br/
-            = f.label :content
-            %br/
-            = f.text_field :content, autofocus: true, class: 'form-control'
-            = f.hidden_field :movie_id
-            = f.hidden_field :user_id
-          .actions.pull-right
-            = f.submit "Submit", class: 'btn btn-default'
+        = render 'comments/form'
