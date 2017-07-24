@@ -14,38 +14,27 @@ RSpec.describe User do
     end
   end
 
-  # context 'test movies with comments' do
-  #   let!(:movie) { FactoryGirl.create(:movie, :with_comments, comments_count: 2)}
-  # end
-
   context "when multiple comments" do
+    let!(:user1) { FactoryGirl.create(:user, :with_comments, comment_count: 4, id: 1) }
+    let!(:user2) { FactoryGirl.create(:user, :with_comments, comment_count: 3, id: 2) }
+    let!(:user3) { FactoryGirl.create(:user, :with_comments, comment_count: 2, id: 3) }
+
     before do
-      (1..10).each do |user_id|
-        FactoryGirl.create(:user, id: user_id)
-        if user_id == 1
-          3.times do
-            FactoryGirl.create(:comment, user_id: user_id)
-          end
-        elsif user_id == 2
-          3.times do
-            FactoryGirl.create(:comment, user_id: user_id)
-          end
-        else
-          FactoryGirl.create(:comment, user_id: user_id)
-        end
+      (4..11).each do |user_id|
+        FactoryGirl.create(:user, :with_comments, comment_count: 1, id: user_id)
       end
     end
 
     it "returns 10 results" do
       result = top_commenters
       expect(result).not_to be_empty
-      expect(result.size).to eq( {1=>3, 2=>3, 3=>1, 4=>1, 5=>1, 6=>1, 7=>1, 8=>1, 9=>1, 10=>1})
+      expect(result.size).to eq( {1=>4, 2=>3, 3=>2, 4=>1, 5=>1, 6=>1, 7=>1, 8=>1, 9=>1, 10=>1})
     end
 
     it "first result is as expected" do
       result = top_commenters
       expect(result.first.id).to eq(1)
-      expect(result.first.count).to eq(3)
+      expect(result.first.count).to eq(4)
     end
   end
 end
