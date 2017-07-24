@@ -32,17 +32,16 @@ RSpec.describe User do
       end
     end
 
-    it 'returns top 10 results' do
-      binding.pry
+    it 'returns 10 results' do
       result = top_commenters
       expect(result).not_to be_empty
+      expect(result.size).to eq( {1=>3, 2=>3, 3=>1, 4=>1, 5=>1, 6=>1, 7=>1, 8=>1, 9=>1, 10=>1})
+    end
+
+    it 'first result is as expected' do
+      result = top_commenters
       expect(result.first.id).to eq(1)
       expect(result.first.count).to eq(3)
-      expect(result[2].id).to eq(2)
-      expect(result[2].count).to eq(2)
-      expect(result.last.count).to eq(1)
-
-      expect(result.size).to eq(10)
     end
   end
 end
