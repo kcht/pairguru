@@ -14,15 +14,22 @@ class CommentsController < ApplicationController
   def create
     @movie = Movie.find(params[:comment][:movie_id])
     unless current_user_comment(@movie)
-      @comment = Comment.create(comment_params.merge(user_id: current_user.id))
-      flash[:notice] = "Successfully created comment"
+      begin
+        @comment = Comment.create!(comment_params.merge(user_id: current_user.id))
+        flash[:notice] = "Successfully created comment"
+      rescue => e
+        flash[:error] = "Please correct errors in your comment: #{e.message}"
+      end
     end
     redirect_to @movie
   end
 
   def destroy
-    Comment.find(params[:id]).destroy
-    flash[:notice] = "Successfully deleted comment"
+    if Comment.find(params[:id]).destroy
+      flash[:notice] = "Successfully deleted comment"
+    else
+      flash[:notice] = "Somethign went wrong. Didn't delete comment"
+    end
     redirect_back fallback_location: root_path
   end
 
