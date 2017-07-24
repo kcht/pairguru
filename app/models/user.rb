@@ -26,11 +26,11 @@ class User < ApplicationRecord
   validates :phone_number, format: { with: /\A[+]?\d+(?>[- .]\d+)*\z/, allow_nil: true }
 
   scope :top_commenters_from_last_week, -> {
-    select('users.id, users.email, users.name, count(*) as count').
-        where('comments.updated_at > ?', 7.days.ago).
-        joins(:comments).
-        group('id').
-        order('count(*) desc').
-        limit(10)
+    select("users.id, users.email, users.name, count(*) as count")
+      .where("comments.updated_at > ?", 7.days.ago)
+      .joins(:comments)
+      .group("id")
+      .order("count(*) desc")
+      .limit(10)
   }
 end

@@ -78,7 +78,7 @@ describe TitleBracketsValidator do
   context "with empty string" do
     let(:title) { "" }
     it_behaves_like "has valid title"
-    end
+  end
 
   context "with whitespaced string" do
     let(:title) { "     \n" }

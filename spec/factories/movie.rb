@@ -8,7 +8,7 @@ FactoryGirl.define do
     transient do
       comment_count 0
     end
-    
+
     trait :with_comments do
       after(:create) do |movie, evaluator|
         user = create :user

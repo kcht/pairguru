@@ -1,10 +1,10 @@
 FactoryGirl.define do
   factory :user do
-    sequence(:id) {|n| n.to_s}
+    sequence(:id, &:to_s)
     email { "fake#{id}@fake.com" }
-    name { 'Faker' }
-    password { 'testtesttest'}
-    password_confirmation { 'testtesttest'}
+    name { "Faker" }
+    password { "testtesttest" }
+    password_confirmation { "testtesttest" }
 
     transient do
       comment_count 0

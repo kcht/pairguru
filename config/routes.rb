@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  default_url_options :host => "localhost:3000"
+  default_url_options host: "localhost:3000"
 
   root "home#welcome"
   resources :genres, only: :index do
@@ -15,8 +15,8 @@ Rails.application.routes.draw do
     collection do
       get :export
     end
-    resources :comments 
+    resources :comments
   end
 
-  get '/top_commenters', to: 'comments#top_commenters', as: 'top_commenters'
+  get "/top_commenters", to: "comments#top_commenters", as: "top_commenters"
 end

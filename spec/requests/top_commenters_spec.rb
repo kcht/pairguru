@@ -2,13 +2,13 @@ require "rails_helper"
 
 describe "Top commenters requests", type: :request do
   describe "movies list" do
-    subject {visit "/top_commenters"}
+    subject { visit "/top_commenters" }
 
     context "when there are some comments in last 7 days" do
       context "for less than 10 users" do
-        let!(:user1) {FactoryGirl.create(:user, :with_comments, comment_count: 5)}
-        let!(:user2) {FactoryGirl.create(:user, :with_comments, comment_count: 2)}
-        let!(:user3) {FactoryGirl.create(:user, :with_comments, comment_count: 3)}
+        let!(:user1) { FactoryGirl.create(:user, :with_comments, comment_count: 5) }
+        let!(:user2) { FactoryGirl.create(:user, :with_comments, comment_count: 2) }
+        let!(:user3) { FactoryGirl.create(:user, :with_comments, comment_count: 3) }
 
         it "displays right title" do
           subject
@@ -29,7 +29,7 @@ describe "Top commenters requests", type: :request do
       end
 
       context "for more than 10 users" do
-        let!(:user_without_comments) { FactoryGirl.create(:user, email: 'no@comment.pl') }
+        let!(:user_without_comments) { FactoryGirl.create(:user, email: "no@comment.pl") }
 
         before do
           10.times do
@@ -44,9 +44,8 @@ describe "Top commenters requests", type: :request do
 
         it "contains only required results" do
           subject
-          expect(page).not_to have_selector("td", text: 'no@comment.pl')
+          expect(page).not_to have_selector("td", text: "no@comment.pl")
         end
-
       end
     end
 

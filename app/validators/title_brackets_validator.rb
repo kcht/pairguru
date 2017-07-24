@@ -5,10 +5,10 @@ class TitleBracketsValidator
     @record = record
   end
 
-  BRACKETS_PAIRS = {'(' => ')', '{' => '}', '[' => ']'}
+  BRACKETS_PAIRS = { "(" => ")", "{" => "}", "[" => "]" }.freeze
 
   def contains_empty_brackets?(title)
-    remove_whitespaces = title.gsub!(/\s/,'')
+    remove_whitespaces = title.gsub!(/\s/, "")
     !!remove_whitespaces.match(/\{\}|\(\)|\[\]/)
   end
 

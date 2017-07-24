@@ -9,9 +9,9 @@ describe "Movies requests", type: :request do
   end
 
   describe "comments list" do
-    subject {visit "/movies/#{movie.id}"}
+    subject { visit "/movies/#{movie.id}" }
 
-    let(:movie) {FactoryGirl.create(:movie, :with_comments, comment_count: 5)}
+    let(:movie) { FactoryGirl.create(:movie, :with_comments, comment_count: 5) }
 
     it "displays right title" do
       subject
@@ -19,7 +19,7 @@ describe "Movies requests", type: :request do
     end
 
     context "when movie doesn't have comments" do
-      let!(:movie) {FactoryGirl.create(:movie)}
+      let!(:movie) { FactoryGirl.create(:movie) }
 
       it "displays right header for comment section" do
         subject

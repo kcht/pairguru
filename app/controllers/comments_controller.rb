@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :destroy]
 
   expose(:movie)
-  expose(:comments) {movie.comments}
+  expose(:comments) { movie.comments }
   expose(:comment)
 
   def new
@@ -25,11 +25,11 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    if Comment.find(params[:id]).destroy
-      flash[:notice] = "Successfully deleted comment"
-    else
-      flash[:notice] = "Somethign went wrong. Didn't delete comment"
-    end
+    flash[:notice] = if Comment.find(params[:id]).destroy
+                       "Successfully deleted comment"
+                     else
+                       "Somethign went wrong. Didn't delete comment"
+                     end
     redirect_back fallback_location: root_path
   end
 
@@ -43,4 +43,3 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:title, :content, :movie_id)
   end
 end
-

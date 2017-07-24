@@ -7,7 +7,7 @@ require "pry"
 require "capybara/rails"
 require "simplecov"
 require "shoulda/matchers"
-require 'support/controller_helpers'
+require "support/controller_helpers"
 
 SimpleCov.start "rails"
 # Add additional requires below this line. Rails is not loaded until this point!
