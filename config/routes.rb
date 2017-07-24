@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     collection do
       get :export
     end
-    resources :comments
+    resources :comments 
   end
 
   get '/top_commenters', to: 'comments#top_commenters', as: 'top_commenters'

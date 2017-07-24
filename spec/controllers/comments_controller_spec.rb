@@ -12,7 +12,6 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     before do
-      # allow_any_instance_of(described_class).to receive(:current_user).and_return ( current_user )
       user = double('user')
       allow(user).to receive(:id) { 1 }
       allow(request.env['warden']).to receive(:authenticate!).and_return(user)
@@ -39,7 +38,7 @@ RSpec.describe CommentsController, type: :controller do
 
         context 'when user comments for the first time' do
           before do
-            FactoryGirl.create(:comment, movie_id: movie.id, user_id: 2)
+            FactoryGirl.create(:comment, movie_id: movie.id, user_id: 2, title: 'existing')
           end
 
           it 'comment is created' do
@@ -49,12 +48,12 @@ RSpec.describe CommentsController, type: :controller do
         
         context 'when user comments for the second time' do
           before do
-            FactoryGirl.create(:comment, movie_id: movie.id, user_id: 1)
+            FactoryGirl.create(:comment, movie_id: movie.id, user_id: 1, title: 'existing')
           end
 
           it 'comment is updated' do
             expect{ create_comment }.not_to change{Comment.count}
-            expect(Comment.find_by(movie_id: movie.id, user_id: 1).title).to eq(comment[:title])
+            expect(Comment.find_by(movie_id: movie.id, user_id: 1).title).to eq('existing')
           end
         end
       end

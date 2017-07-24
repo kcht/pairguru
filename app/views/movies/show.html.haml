@@ -4,7 +4,15 @@
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(movie), class: 'btn btn-sm btn-default'
   %h3= 'Add a comment'
-  = render 'comments/form'
+  - if can_user_comment_movie?(movie)
+    = render 'comments/form'
+  - else
+    .jumbotron
+      You have already commented on this movie, thank you for your input.
+      If you want to comment again, please
+      - comment = current_user_comment(movie)
+      = link_to 'delete', movie_comment_path(movie_id: movie.id, id: comment.id), method: :delete
+      your previous comment first.
 %h3= 'All comments'
 %table.table.table-striped
   %tbody
@@ -26,6 +34,6 @@
 
         %td
           - if current_user.id == comment.user.id
-            = link_to 'Delete my comment', movie_comment_path(comment), method: :delete
+            = link_to 'Delete my comment', movie_comment_path(movie_id: movie.id, id: comment.id), method: :delete
 
 
