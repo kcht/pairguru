@@ -11,22 +11,16 @@ RSpec.describe CommentsController, type: :controller do
       }, movie_id: movie.id}
     end
 
-    before do
-      user = double('user')
-      allow(user).to receive(:id) { 1 }
-      allow(request.env['warden']).to receive(:authenticate!).and_return(user)
-      allow(controller).to receive(:current_user).and_return(user)
-    end
-    context 'when the user is not logged in' do
-
-    end
-
     let(:comment) { {title: 'x', content: 'y', movie_id: movie.id, user_id: 1 } }
     context 'when the user is logged in' do
+      let(:user) { FactoryGirl.create(:user, id: 1) }
+      before(:each) do
+        sign_in user
+      end
+
       let(:movie) { FactoryGirl.create(:movie) }
 
       context 'when this is the first comment for the movie' do
-
         it 'comment is created' do
           expect{ create_comment }.to change{Comment.count}.from(0).to(1)
         end
@@ -34,7 +28,6 @@ RSpec.describe CommentsController, type: :controller do
 
       context 'when this movie already has comments' do
         let(:movie) { FactoryGirl.create(:movie) }
-
 
         context 'when user comments for the first time' do
           before do

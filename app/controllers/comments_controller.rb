@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
   include CommentsHelper
 
+  before_action :authenticate_user!, only: [:new, :create, :destroy]
+
   expose(:movie)
   expose(:comments) {movie.comments}
   expose(:comment)
