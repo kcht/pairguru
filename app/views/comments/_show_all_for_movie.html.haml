@@ -1,0 +1,27 @@
+- all_comments = movie.comments.reject { |c| c.id.nil? }
+- if all_comments.empty?
+  %h3= 'There are no comments for this movie yet...'
+- else
+  %h3= 'Comments for this movie'
+  %table.table.table-striped
+    %tbody
+      %th
+        %td= 'Author'
+        %td= 'Comment'
+        %td= 'Last updated'
+        %td
+      - all_comments.each_with_index do |comment, i|
+        %tr
+          %td= i + 1
+          %td
+            %p= comment.user.email
+          %td
+            %p= comment.title
+            %p= comment.content
+          %td
+            %p= formatted_comment_datetime(comment.updated_at)
+          %td
+            - if current_user&.id == comment.user.id
+              = link_to 'Delete my comment', movie_comment_path(movie_id: movie.id, id: comment.id), method: :delete
+
+

@@ -3,8 +3,8 @@
   = movie.description
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(movie), class: 'btn btn-sm btn-default'
-  %h3= 'Add a comment'
   - if can_user_comment_movie?(movie)
+    %h3= 'Add a comment'
     = render 'comments/form'
   - else
     .jumbotron
@@ -13,27 +13,4 @@
       - comment = current_user_comment(movie)
       = link_to 'delete', movie_comment_path(movie_id: movie.id, id: comment.id), method: :delete
       your previous comment first.
-%h3= 'All comments'
-%table.table.table-striped
-  %tbody
-    %th
-      %td= 'Author'
-      %td= 'Comment'
-      %td= 'Last updated'
-      %td
-    - movie.comments.reject { |c| c.id.nil? }.each_with_index do |comment, i|
-      %tr
-        %td= i + 1
-        %td
-          %p= comment.user.email
-        %td
-          %p= comment.title
-          %p= comment.content
-        %td
-          %p= formatted_comment_datetime(comment.updated_at)
-
-        %td
-          - if current_user.id == comment.user.id
-            = link_to 'Delete my comment', movie_comment_path(movie_id: movie.id, id: comment.id), method: :delete
-
-
+= render 'comments/show_all_for_movie', locals: {movie: movie}

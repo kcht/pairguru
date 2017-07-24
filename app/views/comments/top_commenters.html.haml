@@ -1,13 +1,16 @@
-%h1= 'Top commenters from last 7 days'
-%table.table.table-striped
-  %tbody
-    %th= 'Rank'
-    %th= 'User name'
-    %th= 'User email'
-    %th= '# of comments during last 7 days'
-    - @top_commenters.each_with_index do |commenter, i|
-      %tr
-        %td= i + 1
-        %td= commenter.name
-        %td= commenter.email
-        %td= commenter.count
+- if @top_commenters.empty?
+  %h1= 'No comments in last 7 days'
+- else
+  %h1= 'Top commenters from last 7 days'
+  %table.table.table-striped
+    %tbody
+      %th= 'Rank'
+      %th= 'User name'
+      %th= 'User email'
+      %th= '# of comments during last 7 days'
+      - @top_commenters.each_with_index do |commenter, i|
+        %tr
+          %td= i + 1
+          %td= commenter.name
+          %td= commenter.email
+          %td= commenter.count
